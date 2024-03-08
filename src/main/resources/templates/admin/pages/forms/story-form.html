@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Vocabulary</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/feather/feather.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/mdi/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/ti-icons/css/themify-icons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/typicons/typicons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/simple-line-icons/css/simple-line-icons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/css/vendor.bundle.base.css}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/select2/select2.min.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/select2-bootstrap-theme/select2-bootstrap.min.css}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" th:href="@{/static-admin/css/vertical-layout-light/style.css}">
+  <!-- endinject -->
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <header th:replace="/admin/partials/_navbar.html"></header>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      <header th:replace="/admin/partials/_settings-panel.html"></header>
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      <header th:replace="/admin/partials/_sidebar.html"></header>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="grid-margin stretch-card" style="flex: 0 0 auto;width: 70%;padding-left: 20%">
+              <div class="card">
+                <div class="card-body">
+                  <h3 style="padding-bottom: 20px"><strong>[[${pageTitle}]]</strong> </h3>
+                  
+                  <form class="forms-sample" th:action="@{/manage/bilingual-story/save}" method="post" enctype="multipart/form-data" th:object="${story}">
+                  	<input type="hidden" th:field="*{storyId}" th:value="${story.storyId}"/>
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Tên tiếng Việt</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Tên tiếng Việt" th:field="*{name}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Tên tiếng Anh</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Tên tiếng Anh" th:field="*{englishName}">
+                    </div>
+                    <div class="form-group">
+                    <label for="exampleInputUsername1">Ảnh bìa</label>
+                    <input type="file" name="fileImage" th:required="${state==0} ? 'required' : null">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputUsername1">Mô tả ngắn</label>
+                      <input type="text" class="form-control" id="exampleInputUsername1" placeholder="Mô tả" th:field="*{description}">
+                    </div>
+                    <div class="form-group">
+						<label for="exampleInputUsername1">Thể loại</label>
+						<div class="col-lg-6">
+							<select class="form-control" id="sel1"
+								th:field="*{category}">
+								<option value="Truyện ngụ ngôn">Truyện ngụ ngôn</option>
+								<option value="Câu truyện cuộc sống">Cuộc sống</option>
+								<option value="Truyện sử việt">Đạo đức</option>
+							</select>
+						</div>
+					</div>
+                    
+                    <div class="form-group">
+                    <label for="exampleInputUsername1">Nội dung</label>
+                    <input type="file" name="file" th:required="${state==0} ? 'required' : null">
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    <button class="btn btn-light" onclick="location.href='/manage/bilingual-story'" type="button">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        
+        <!-- <header th:replace="/admin/partials/_footer.html"></header> -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="/static-admin/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="/static-admin/vendors/typeahead.js/typeahead.bundle.min.js"></script>
+  <script src="/static-admin/vendors/select2/select2.min.js"></script>
+  <script src="/static-admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="/static-admin/js/off-canvas.js"></script>
+  <script src="/static-admin/js/hoverable-collapse.js"></script>
+  <script src="/static-admin/js/template.js"></script>
+  <script src="/static-admin/js/settings.js"></script>
+  <script src="/static-admin/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/static-admin/js/file-upload.js"></script>
+  <script src="/static-admin/js/typeahead.js"></script>
+  <script src="/static-admin/js/select2.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>

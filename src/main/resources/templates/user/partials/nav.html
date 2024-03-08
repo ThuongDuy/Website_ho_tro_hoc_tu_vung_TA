@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg">
+          <div class="container">
+              <a class="navbar-brand" href="/app/">
+                  <i class="bi-back"></i>
+                  <span>Vocabulary</span>
+              </a>
+
+              <div class="d-lg-none ms-auto me-4">
+                  <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+              </div>
+
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                      <li class="nav-item">
+                          <a class="nav-link click-scroll" href="/app/#section_1">Trang chủ</a>
+                      </li>
+
+                      
+
+                      <li class="nav-item">
+                          <a class="nav-link click-scroll" href="/app/#section_3">Hoạt động</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link click-scroll" href="/app/#section_4">Hỏi đáp</a>
+                      </li>
+
+                      <li class="nav-item">
+                          <a class="nav-link" href="/app/dictionary">Từ điển</a>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">Truyện song ngữ</a>
+
+                          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink1" sec:authorize="isAuthenticated()">
+                              <li><a class="dropdown-item" href="/app/my-story">Đã lưu</a></li>
+
+                              <li><a class="dropdown-item" href="/app/bilingual-story">Tất cả</a></li>
+                          </ul>
+                          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink" sec:authorize="!isAuthenticated()">
+                              <li><a class="dropdown-item" href="/app/bilingual-story">Tất cả</a></li>
+                          </ul>
+                      </li>
+
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">Khóa học</a>
+
+                          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink" sec:authorize="isAuthenticated()">
+                              <li><a class="dropdown-item" href="/app/courses">Đã đăng ký</a></li>
+
+                              <li><a class="dropdown-item" href="/app/courses/all">Các khóa học khác</a></li>
+                          </ul>
+                          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink" sec:authorize="!isAuthenticated()">
+                              <li><a class="dropdown-item" href="/app/courses/all">Tất cả khóa học</a></li>
+                          </ul>
+                      </li>
+                  </ul>
+
+                  <div class="d-none d-lg-block dropdown" sec:authorize="isAuthenticated()">
+                      <!-- <a href="/pages/samples/login.html" class="navbar-icon bi-person smoothscroll"></a> -->
+                      <img th:unless=${#authentication.getPrincipal().getUser().getAvatar()} src="/static-admin/images/faces/face.png" alt="image"  id="image" class="navbar-icon smoothscroll"/>
+                      <div><img th:if=${#authentication.getPrincipal().getUser().getAvatar()} class="navbar-icon smoothscroll" id="image" alt=""
+                       th:src = "@{'/images/'+${#authentication.getPrincipal().getUser().getUsername()}+'/'+${#authentication.getPrincipal().getUser().getAvatar()}}"></div>
+                       <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="abc">
+                              <li><a class="dropdown-item" href="/app/user/profile">Hồ sơ</a></li>
+
+                              <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                          </ul>
+                  </div>
+
+                   <div class="d-none d-lg-block" sec:authorize="!isAuthenticated()">
+                   		<button class="btn btn-primary me-2" onclick="location.href='/app/login'" type="button">ĐĂNG NHẬP</button>
+					</div>
+                 
+                  
+              </div>
+          </div>
+      </nav>

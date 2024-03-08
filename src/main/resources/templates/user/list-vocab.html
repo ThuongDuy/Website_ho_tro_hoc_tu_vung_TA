@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Vocabulary</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+        
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap}" rel="stylesheet">
+                        
+        <link th:href="@{/static-user/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/bootstrap-icons.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/templatemo-topic-listing.css}" rel="stylesheet">
+<!--
+
+TemplateMo 590 topic listing
+
+https://templatemo.com/tm-590-topic-listing
+
+-->
+    </head>
+    
+    <body id="top">
+
+        <main>
+
+            <header th:replace="/user/partials/nav.html"></header>
+            
+			<header class="site-header d-flex flex-column justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-6 col-10">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/app/">Trang chủ</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">Tất cả khóa học</li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">[[${course.courseName}]]</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+
+            <section class="topics-detail-section section-padding" id="topics-detail">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 m-auto" >
+                            <blockquote>
+                            	<div>Cấp độ [[${topic.level}]]</div>
+                            	<div>[[${topic.topicName}]]</div>
+                                <div class="progress progress-md" style="margin-top:10px; margin-bottom:10px">
+                                  <div class="progress-bar bg-success" role="progressbar" id="width" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="container_swap">
+								     <div class="div_left">
+								     	<div class="dropdownn">
+									        <button type="button" class="btn btn-success">Tùy chọn</button>
+									        <div class="dropdown-content">
+									            <a th:href="'/app/course/'+${course.courseId}+'/topic/'+${topic.topicId}+'/start-again'">Bắt đầu lại</a>
+									            <a th:href="'/app/course/'+${course.courseId}+'/topic/'+${topic.topicId}+'/review'">Ôn tập</a>
+									        </div>
+									    </div>
+								     </div>
+								     <div th:if="${progression.progress<listVocab.size()}" class="div_right" style="margin-top: 10px;margin-bottom: 10px">
+								     	<a th:href="@{/app/learn(courseId=${course.courseId},topicId=${topic.topicId})}">
+								     	<button type="button" class="btn btn-outline-success btn-fw">Tiếp tục học</button>
+								     	</a>
+								     </div>
+								     <div th:if="${progression.progress==listVocab.size()}" class="div_right" style="margin-top: 10px;margin-bottom: 10px">
+								     	<a th:href="'/app/course/'+${course.courseId}+'/topic/'+${topic.topicId}+'/review'">
+								     	<button type="button" class="btn btn-outline-success btn-fw">Ôn ([[${progression.progress}]]) từ</button>
+								     	</a>
+								     </div>
+								</div>
+                                
+                            </blockquote>
+                          <div style="background-color: var(--section-bg-color);border-radius: var(--border-radius-small);
+                          margin-top: 25px">
+						      <div class="table-responsive">
+				                    <table class="table">
+				                      <thead>
+				                      </thead>
+				                      <tbody>
+				                        <tr th:each="vocab, i: ${listVocab}">
+				                          <td th:text="${vocab.vocab}" />
+				                          <td th:text="${vocab.fromType}" />
+				                          <td th:text="${vocab.means}" />
+				                          <th:block th:if="${i.index+1 <= progression.progress}">
+				                          		<td><label class="badge badge-success">Ôn tập</label></td>
+				                          </th:block>
+				                          <th:block th:unless="${i.index+1 <= progression.progress}">
+				                          		<td><label class="badge badge-warning">Học</label></td>
+				                          </th:block>
+				                        </tr>
+				                      </tbody>
+				                    </table>
+				                  </div>
+			                 </div>
+                        </div>
+						 
+                    </div>
+                </div>
+            </section>
+        </main>
+		
+        <div th:replace="/user/partials/footer.html"></div>
+
+        <!-- JAVASCRIPT FILES -->
+        <script th:src="@{/static-user/js/jquery.min.js}"></script>
+        <script th:src="@{/static-user/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/static-user/js/jquery.sticky.js}"></script>
+        <script th:src="@{/static-user/js/custom.js}"></script>
+		<script type="text/javascript">
+			var my_width = '[[${my_width}]]'+"%"
+	        console.log(my_width)
+	        var thongTin = document.getElementById("width");
+	        thongTin.style.width = my_width;
+		</script>
+    </body>
+</html>

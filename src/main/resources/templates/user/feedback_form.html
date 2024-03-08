@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Vocabulary</title>
+<meta name="description" content="Feedback">
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap')
+	;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Inter', sans-serif;
+}
+
+.formbold-main-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 48px;
+}
+
+.formbold-form-wrapper {
+	margin: 0 auto;
+	max-width: 570px;
+	width: 100%;
+	background: white;
+	padding: 40px;
+}
+
+.formbold-form-img {
+	margin-bottom: 45px;
+}
+
+.formbold-input-group {
+	margin-bottom: 18px;
+}
+
+.formbold-form-select {
+	width: 100%;
+	padding: 12px 22px;
+	border-radius: 5px;
+	border: 1px solid #dde3ec;
+	background: #ffffff;
+	font-size: 16px;
+	color: #536387;
+	outline: none;
+	resize: none;
+}
+
+.formbold-input-radio-wrapper {
+	margin-bottom: 25px;
+}
+
+.formbold-radio-flex {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.formbold-radio-label {
+	font-size: 14px;
+	line-height: 24px;
+	color: #07074d;
+	position: relative;
+	padding-left: 25px;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.formbold-input-radio {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.formbold-radio-checkmark {
+	position: absolute;
+	top: -1px;
+	left: 0;
+	height: 18px;
+	width: 18px;
+	background-color: #ffffff;
+	border: 1px solid #dde3ec;
+	border-radius: 50%;
+}
+
+.formbold-radio-label
+    .formbold-input-radio:checked
+    ~ .formbold-radio-checkmark {
+	background-color: #6a64f1;
+}
+
+.formbold-radio-checkmark:after {
+	content: '';
+	position: absolute;
+	display: none;
+}
+
+.formbold-radio-label
+    .formbold-input-radio:checked
+    ~ .formbold-radio-checkmark:after {
+	display: block;
+}
+
+.formbold-radio-label .formbold-radio-checkmark:after {
+	top: 50%;
+	left: 50%;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: #ffffff;
+	transform: translate(-50%, -50%);
+}
+
+.formbold-form-input {
+	width: 100%;
+	padding: 13px 22px;
+	border-radius: 5px;
+	border: 1px solid #dde3ec;
+	background: #ffffff;
+	font-weight: 500;
+	font-size: 16px;
+	color: #07074d;
+	outline: none;
+	resize: none;
+}
+
+.formbold-form-input::placeholder {
+	color: #536387;
+}
+
+.formbold-form-input:focus {
+	border-color: #6a64f1;
+	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.formbold-form-label {
+	color: #07074d;
+	font-size: 14px;
+	line-height: 24px;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.formbold-btn {
+	text-align: center;
+	width: 100%;
+	font-size: 16px;
+	border-radius: 5px;
+	padding: 14px 25px;
+	border: none;
+	font-weight: 500;
+	background-color: #6a64f1;
+	color: white;
+	cursor: pointer;
+	margin-top: 25px;
+}
+
+.formbold-btn:hover {
+	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.05);
+}
+</style>
+</head>
+
+<body marginheight="0" topmargin="0" marginwidth="0"
+	style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
+	<div class="formbold-main-wrapper">
+		<div class="formbold-form-wrapper">
+		<h3 style="text-align: center;">Gửi phản hồi</h3>
+			<form action="/app/user/feedback/send" method="POST" enctype="multipart/form-data"
+										th:object="${feedback}">
+				<div class="formbold-input-radio-wrapper">
+					<label for="ans" class="formbold-form-label"> Bạn đã tìm thấy lỗi ở đâu? </label>
+
+					<div class="formbold-radio-flex">
+						<div class="formbold-radio-group">
+							<label class="formbold-radio-label"> <input value="Từ/cụm từ tôi đang học"
+								class="formbold-input-radio" type="radio" name="ans1" id="ans1" />
+								Từ/cụm từ tôi đang học <span class="formbold-radio-checkmark"></span>
+							</label>
+						</div>
+
+						<div class="formbold-radio-group">
+							<label class="formbold-radio-label"> <input value="Bài test trong khóa học"
+								class="formbold-input-radio" type="radio" name="ans1" id="ans1" />
+								Bài test trong khóa học<span class="formbold-radio-checkmark"></span>
+							</label>
+						</div>
+
+						
+					</div>
+				</div>
+
+				<div class="formbold-input-radio-wrapper">
+					<label for="ans" class="formbold-form-label"> Vui lòng chọn loại lỗi bạn đã tìm thấy</label>
+
+					<div class="formbold-radio-flex">
+						<div class="formbold-radio-group">
+							<label class="formbold-radio-label"> <input value="Dịch sai"
+								class="formbold-input-radio" type="radio" name="ans" id="ans" />
+								Dịch sai <span class="formbold-radio-checkmark"></span>
+							</label>
+						</div>
+
+						<div class="formbold-radio-group">
+							<label class="formbold-radio-label"> <input value="Lỗi đánh máy/chính tả"
+								class="formbold-input-radio" type="radio" name="ans" id="ans" />
+								Lỗi đánh máy/chính tả <span class="formbold-radio-checkmark"></span>
+							</label>
+						</div>
+
+						<div class="formbold-radio-group">
+							<label class="formbold-radio-label"> <input value="Không khớp với âm thanh"
+								class="formbold-input-radio" type="radio" name="ans" id="ans" />
+								Không khớp với âm thanh <span class="formbold-radio-checkmark"></span>
+							</label>
+						</div>
+						<div class="formbold-radio-group">
+							<label class="formbold-radio-label"> <input value="Sai đáp án của câu hỏi"
+								class="formbold-input-radio" type="radio" name="ans" id="ans" />
+								Sai đáp án của câu hỏi <span class="formbold-radio-checkmark"></span>
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<label for="message" class="formbold-form-label">Vui lòng cho chúng tôi biết khóa học và cấp độ/bài test</label>
+					<textarea rows="6" name="message" id="message" th:field="*{detail}" 
+						placeholder="Viết vào đây..." class="formbold-form-input"></textarea>
+				</div>
+				<input type="submit" class="formbold-btn" value="Submit">
+			</form>
+		</div>
+	</div>
+
+	<script>
+    $(document).ready(function() {
+        $('#example').select2();
+    });
+	</script>
+</body>
+
+</html>

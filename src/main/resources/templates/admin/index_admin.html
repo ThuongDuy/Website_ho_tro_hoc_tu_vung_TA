@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Vocabulary</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/feather/feather.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/mdi/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/ti-icons/css/themify-icons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/typicons/typicons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/simple-line-icons/css/simple-line-icons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/css/vendor.bundle.base.css}">
+
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/js/select.dataTables.min.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" th:href="@{/static-admin/css/vertical-layout-light/style.css}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <header th:replace="/admin/partials/_navbar.html"></header>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <header th:replace="/admin/partials/_settings-panel.html"></header>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <header th:replace="/admin/partials/_sidebar.html"></header>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
+                  <ul class="nav nav-tabs" role="tablist">
+                    
+                  </ul>
+                  
+                </div>
+                <div class="tab-content tab-content-basic">
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <div class="statistics-details d-flex align-items-center justify-content-between">
+                          <div>
+                            <p class="statistics-title" style="text-align: center;">Người dùng</p>
+                            <h3 class="rate-percentage" style="text-align: center;">[[${sumUser}]]</h3>
+                            
+                          </div>
+                          <div>
+                            <p class="statistics-title" style="text-align: center;" >Khóa học</p>
+                            <h3 class="rate-percentage" style="text-align: center;">[[${sumCourse}]]</h3>
+                           
+                          </div>
+                          <div>
+                            <p class="statistics-title" style="text-align: center;">Truyện song ngữ</p>
+                            <h3 class="rate-percentage" style="text-align: center;">[[${sumStory}]]</h3>
+                            
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div> 
+                    <div class="row">
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash">Top 10 khóa học</h4>
+                                   <p class="card-subtitle card-subtitle-dash">Có lượt đăng ký nhiều nhất</p>
+                                  </div>
+                                </div>
+                                
+                                <div class="chartjs-bar-wrapper mt-3">
+                                  <canvas id="myChart"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash">Thành viên</h4>
+                                  </div>
+                                  <div>
+                                    <button class="btn btn-primary btn-lg text-white mb-0 me-0" type="button" onclick="location.href='/manage/users/new'" ><i class="mdi mdi-account-plus"></i>Thêm thành viên mới</button>
+                                  </div>
+                                </div>
+                                <div class="table-responsive  mt-1">
+                                  <table class="table select-table">
+                                    <thead>
+                                      <tr>
+                                        
+                                        <th>Tên thành viên</th>
+                                        <th>Email</th>
+                                        <th>Ngày tham gia</th>
+                                        <th>Hành động</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr th:each="user, i: ${member}">
+                                        <td>
+                                          <div class="d-flex ">
+                                            <img th:unless=${user.avatar} src="/static-admin/images/faces/face.png" alt="image"/>
+                           					<img th:if=${user.avatar} th:src = "@{'/images/'+${user.username}+'/'+${user.avatar}}" alt="image"/>
+                                            <div>
+                                              <h6>[[${user.username}]]</h6>
+                                              <p>[[${user.fullName}]]</p>
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <h6>[[${user.email}]]</h6>
+                                        </td>
+                                        <td>
+                                          <h6>[[${dateFormat.format(user.getCreated())}]]</h6>
+                                        </td>
+                                        <td>
+								          <a th:href="@{/manage/users/edit(id=${user.userId})}" title="Edit this user"
+								            class="fa-regular fa-pen-to-square icon-dark"></a>
+								           &nbsp;
+								          <a th:href="@{/manage/users/delete(id=${user.userId})}" id="btnDelete" th:username="${user.username}" data-toggle="modal"
+								            title="Delete this user" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+								      </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="col-lg-4 d-flex flex-column" style="height: 750px;">
+                        
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                      <div>
+                                        <h4 class="card-title card-title-dash">Top người dùng</h4>
+                                      </div>
+                                    </div>
+                                    <div class="mt-3">
+                                    <th:block th:each="user, i: ${listUser}">
+                                      <div th:unless=${i.index==listUser.size()-1} class="wrapper d-flex align-items-center justify-content-between py-2 border-bottom">
+                                        <div class="d-flex">
+                                        	<img th:unless=${user.avatar} src="/static-admin/images/faces/face.png" class="img-sm rounded-10" alt="image"/>
+                           					<img th:if=${user.avatar} th:src = "@{'/images/'+${user.username}+'/'+${user.avatar}}" class="img-sm rounded-10" alt="image"/>
+                                          
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">[[${user.username}]]</p>
+                                            <small class="text-muted mb-0">[[${learned.get(i.index)}]] từ đã học</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          Từ [[${dateFormat.format(user.getCreated())}]]
+                                        </div>
+                                      </div>
+                                      <div th:if=${i.index==listUser.size()-1} class="wrapper d-flex align-items-center justify-content-between py-2">
+                                        <div class="d-flex">
+                                        	<img th:unless=${user.avatar} src="/static-admin/images/faces/face.png" class="img-sm rounded-10" alt="image"/>
+                           					<img th:if=${user.avatar} th:src = "@{'/images/'+${user.username}+'/'+${user.avatar}}" class="img-sm rounded-10" alt="image"/>
+                                          
+                                          <div class="wrapper ms-3">
+                                            <p class="ms-1 mb-1 fw-bold">[[${user.username}]]</p>
+                                            <small class="text-muted mb-0">[[${learned.get(i.index)}]] từ đã học</small>
+                                          </div>
+                                        </div>
+                                        <div class="text-muted text-small">
+                                          Từ [[${dateFormat.format(user.getCreated())}]]
+                                        </div>
+                                      </div>
+                                     </th:block>
+                                      
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <div class="modal fade text-center" id="confirmModal">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h5 class="modal-title">Xác nhận xóa</h5>
+		          <button type="button" class="close" data-bs-dismiss="modal">
+		            <span aria-hidden="true">&times;</span>
+		          </button>
+		        </div>
+		
+		        <div class="modal-body">
+		          <span id="confirmText"></span>
+		        </div>
+		
+		        <div class="modal-footer">
+		          <a type="button" id="yesBtn" class="btn btn-danger">Có</a>
+		          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="/static-admin/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="/static-admin/vendors/progressbar.js/progressbar.min.js"></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="/static-admin/js/hoverable-collapse.js"></script>
+  <script src="/static-admin/js/template.js"></script>
+  <script src="/static-admin/js/settings.js"></script>
+  <script src="/static-admin/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="/static-admin/js/jquery.cookie.js" type="text/javascript"></script>
+  <script src="/static-admin/js/dashboard.js"></script>
+  <script src="/static-admin/js/Chart.roundedBarCharts.js"></script>
+  <script th:inline="javascript">
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [[${labels}]],
+                datasets: [{
+                    label: '# lượt đăng ký',
+                    data: [[${data}]],
+                    backgroundColor: [[${background}]],
+                    borderColor: [[${borderColor}]],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        $(document).ready(function () {
+            $(".btn-delete").on("click", function (e) {
+              e.preventDefault();
+              link = $(this);
+              username = link.attr("username");
+              $("#yesBtn").attr("href", link.attr("href"));
+              $("#confirmText").html("Bạn có chắc chắn muốn xóa \<strong\>" + username + "\<\/strong\>?");
+              $("#confirmModal").modal('show');
+            });
+            
+          });
+    </script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>
+

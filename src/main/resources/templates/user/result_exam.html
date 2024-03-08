@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Vocabulary</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+        
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap}" rel="stylesheet">
+                        
+        <link th:href="@{/static-user/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/bootstrap-icons.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/templatemo-topic-listing.css}" rel="stylesheet">
+<!--
+
+TemplateMo 590 topic listing
+
+https://templatemo.com/tm-590-topic-listing
+
+-->
+    </head>
+    
+    <body class="topics-listing-page" id="top">
+		
+        <main>
+            <header th:replace="/user/partials/nav.html"></header>
+            <header class="site-header d-flex flex-column justify-content-center align-items-center" style="height: 30px">
+                <div class="container" >
+                    <div class="row align-items-center">
+
+
+                    </div>
+                </div>
+            </header>
+            <section class="topics-detail-section" id="section">
+                <div class="container">
+                    <div class="row">
+						
+                        <div class="col-lg-10 col-12 mt-3 mx-auto">
+                        	<div style="position:static; padding-bottom: 10px">
+                        		<h6 style="padding-bottom: 15px;padding-top: 15px">Bài thi số [[${test.testNumber}]] - [[${course.courseName}]]</h6>
+                        		<div style="padding-left: 30px">
+	                        		<span> <b>Điểm của bạn: [[${scores}]]/100</b> </span>
+			                        <div>
+			                        	<i class="bi-clock smoothscroll" style="color: black"></i>
+									    Thời gian làm bài: <b>[[${h}]] giờ [[${m}]] phút [[${s}]] giây</b>
+									</div>
+									<div>
+			                        	<i class="bi-person-circle smoothscroll" style="color: black"></i>
+									    Người dùng: <b>[[${username}]]</b>
+									</div>
+									<div>
+			                        	<i class="bi-clock smoothscroll" style="color: #13547A"></i>
+									    Số câu chưa hoàn thành: <b>[[${notDone}]]</b>
+									</div>
+									<div>
+			                        	<i class="bi-x-circle smoothscroll" style="color: red"></i>
+									    Số câu sai: <b>[[${wrong}]]</b>
+									</div>
+									<div>
+			                        	<i class="bi-question-circle smoothscroll" style="color: #13547A"></i>
+									    Tổng số câu: <b>[[${total}]]</b>
+									</div>
+                        		</div>
+                        	</div>
+
+							<div style="padding: 15px;overflow: auto; height: 350px;border: 2px solid #13547A; border-radius: 8px;margin-bottom: 50px; margin-top: 30px">
+	                        	<div th:each="question,iterStat: ${test.listQuestion}">
+								  <span>Câu [[${question.questionNumber}]]: [[${question.content}]]</span> <br>
+								  <input type="radio" th:id="${question.questionId+question.option_1}" th:name="'option-'+${question.questionNumber}" value="A" 
+										th:checked="${answers[iterStat.index]=='A'} ? 'checked' : null" th:disabled="${answers[iterStat.index]!='A'} ? 'checked' : null">
+								  <label th:for="${question.questionId+question.option_1}">A. [[${question.option_1}]]</label><br>
+								  <input type="radio" th:id="${question.questionId+question.option_2}" th:name="'option-'+${question.questionNumber}" value="B" 
+										th:checked="${answers[iterStat.index]=='B'} ? 'checked' : null" th:disabled="${answers[iterStat.index]!='B'} ? 'checked' : null">
+								  <label th:for="${question.questionId+question.option_2}">B. [[${question.option_2}]]</label><br>
+								  <input type="radio" th:id="${question.questionId+question.option_3}" th:name="'option-'+${question.questionNumber}" value="C" 
+										th:checked="${answers[iterStat.index]=='C'} ? 'checked' : null" th:disabled="${answers[iterStat.index]!='C'} ? 'checked' : null">
+								  <label th:for="${question.questionId+question.option_3}">C. [[${question.option_3}]]</label><br>
+								  <div style="padding-left: 8px">
+							  		<input type="radio" th:id="${question.questionId+question.option_4}" th:name="'option-'+${question.questionNumber}" value="D" 
+							  			th:checked="${answers[iterStat.index]=='D'} ? 'checked' : null" th:disabled="${answers[iterStat.index]!='D'} ? 'checked' : null">
+							  		<label th:for="${question.questionId+question.option_4}">D. [[${question.option_4}]]</label><br>
+								  </div>
+								  <div th:unless="${question.correctAnswer==answers[iterStat.index]}">
+									  <span>Đáp án đúng: <strong>[[${question.correctAnswer}]]. [[${correctAnswers[iterStat.index]}]]</strong> </span><br>
+								  </div>
+								</div>
+							</div>
+							<button type="button" class="btn btn-outline-success" style="margin-bottom: 50px;" onclick="next()">Quay lại khóa học</button>
+                        </div>
+                       	
+                    </div>
+                </div>
+            </section>
+            <div th:replace="/user/partials/footer.html"></div>
+        </main>
+		
+
+        <!-- JAVASCRIPT FILES -->
+        <script th:src="@{/static-user/js/jquery.min.js}"></script>
+        <script th:src="@{/static-user/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/static-user/js/jquery.sticky.js}"></script>
+        <script th:src="@{/static-user/js/custom.js}"></script>
+        
+        <script type="text/javascript">
+        function next() {
+        	window.location = "[[@{'/app/courses/'+${course.courseId}}]]";
+		} 
+	        
+  		</script>
+
+    </body>
+</html>

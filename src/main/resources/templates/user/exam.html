@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Vocabulary</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+        
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap}" rel="stylesheet">
+                        
+        <link th:href="@{/static-user/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/bootstrap-icons.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/templatemo-topic-listing.css}" rel="stylesheet">
+<!--
+
+TemplateMo 590 topic listing
+
+https://templatemo.com/tm-590-topic-listing
+
+-->
+    </head>
+    
+    <body class="topics-listing-page" id="top">
+		
+        <main>
+            <header th:replace="/user/partials/nav.html"></header>
+            <header class="site-header d-flex flex-column justify-content-center align-items-center" style="height: 30px">
+                <div class="container" >
+                    <div class="row align-items-center">
+
+
+                    </div>
+                </div>
+            </header>
+            <section class="topics-detail-section" id="section">
+                <div class="container">
+                    <div class="row">
+						
+                        <div class="col-lg-10 col-12 mt-3 mx-auto">
+                        	<div style="position:static; padding-bottom: 10px">
+                        		<h6>Bài thi số [[${test.testNumber}]] - [[${course.courseName}]]</h6>
+		                        <div>
+		                        	<i class="bi-clock smoothscroll" style="color: #13547A"></i>
+								    <span id="h">Giờ</span> :
+								    <span id="m">Phút</span> :
+								    <span id="s" >Giây</span>
+
+								</div>
+                        	</div>
+							<div th:data-my-var-1="${h_val}" id="myDiv1"></div>
+							<div th:data-my-var-2="${m_val}" id="myDiv2"></div>
+							<div th:data-my-var-3="${s_val}" id="myDiv3"></div>
+							
+							<form th:action="@{'/app/course/'+${course.courseId}+'/doTest/'+${test.testId}+'/submit'}"
+								method="post" enctype="multipart/form-data" id="examForm">
+									<div th:data-my-var="${size}" id="myDiv"></div>
+									<div style="padding: 15px;overflow: auto; height: 350px;border: 2px solid #13547A; border-radius: 8px;">
+			                        	<div th:each="question: ${test.listQuestion}">
+										  <span>Câu [[${question.questionNumber}]]: [[${question.content}]]</span> <br>
+										  <input type="radio" th:id="${question.questionId+question.option_1}" th:name="'option-'+${question.questionNumber}" value="A">
+										  <label th:for="${question.questionId+question.option_1}">A. [[${question.option_1}]]</label><br>
+										  <input type="radio" th:id="${question.questionId+question.option_2}" th:name="'option-'+${question.questionNumber}" value="B">
+										  <label th:for="${question.questionId+question.option_2}">B. [[${question.option_2}]]</label><br>
+										  <input type="radio" th:id="${question.questionId+question.option_3}" th:name="'option-'+${question.questionNumber}" value="C">
+										  <label th:for="${question.questionId+question.option_3}">C. [[${question.option_3}]]</label><br>
+										  <div style="padding-left: 8px">
+									  		<input type="radio" th:id="${question.questionId+question.option_4}" th:name="'option-'+${question.questionNumber}" value="D">
+									  		<label th:for="${question.questionId+question.option_4}">D. [[${question.option_4}]]</label><br>
+										  </div>
+										</div>
+									</div>
+									<input type="hidden" name = "hour" id="hour" value="">
+									<input type="hidden" name = "minute" id="minute" value="">
+									<input type="hidden" name = "second" id="second" value="">
+									<input class="btn btn-outline-success" style="margin-bottom: 20px;margin-top: 20px;" type="submit" value="Nộp bài"/>
+							</form> 
+                        </div>
+                       	<!-- <button type="button" class="btn btn-outline-success btn-fw prev" style="width: 150">Nộp bài</button> -->
+                    </div>
+                </div>
+            </section>
+            <div th:replace="/user/partials/footer.html"></div>
+        </main>
+		
+
+        <!-- JAVASCRIPT FILES -->
+        <script th:src="@{/static-user/js/jquery.min.js}"></script>
+        <script th:src="@{/static-user/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/static-user/js/jquery.sticky.js}"></script>
+        <script th:src="@{/static-user/js/custom.js}"></script>
+        
+        <script type="text/javascript">
+	        var h = null; // Giờ
+	        var m = null; // Phút
+	        var s = null;
+	        var timeout = null;
+	        start();
+	        function start()
+	        {
+	        	if (h === null)
+	            {
+	        		var myDiv1 = document.getElementById("myDiv1");
+	    	        h = myDiv1.getAttribute("data-my-var-1");
+	    	        var myDiv2 = document.getElementById("myDiv2");
+	    	        m = myDiv2.getAttribute("data-my-var-2");
+	    	        var myDiv3 = document.getElementById("myDiv3");
+	    	        s = myDiv3.getAttribute("data-my-var-3");
+	            }
+	        	
+	        	if (s === -1){
+	                m -= 1;
+	                s = 59;
+	            }
+	        	if (m === -1){
+	                h -= 1;
+	                m = 59;
+	            }
+	        	
+	        	document.getElementById('h').innerText = h.toString();
+	            document.getElementById('m').innerText = m.toString();
+	            document.getElementById('s').innerText = s.toString();
+	            var hour = document.getElementById("hour");
+	            hour.setAttribute("value",h.toString())
+				var minute = document.getElementById("minute");
+	            minute.setAttribute("value",m.toString())
+	            var second = document.getElementById("second");
+	            second.setAttribute("value",s.toString())
+	            timeout = setTimeout(function(){
+	                s--;
+	                start();
+	            }, 1000);
+	            if(h==0 && m==0 && s ==0){
+	            	$("#examForm").submit();
+	            }
+	        }
+	        function stop(){
+	            clearTimeout(timeout);
+	        }
+	        
+	        //function submit(){
+	        	//const kq=[]
+	        	//var myDiv = document.getElementById("myDiv");
+		        //var myVar = myDiv.getAttribute("data-my-var");
+		        //for(let i = 1; i <= myVar; i++ ) {
+		        	//let elements = document.getElementsByName(i);
+		        	//let len = elements.length;
+		        	//let checkValue = '';
+
+		        	//for (let j = 0; j < len; j++){
+		        	    //if (elements.item(j).checked){
+		        	        //checkValue = elements.item(j).value;
+		        	    //}
+		        	//}
+		        	//kq.push(checkValue)
+		        //}
+		        //console.log(kq);
+
+	        //}
+	        
+  		</script>
+
+    </body>
+</html>

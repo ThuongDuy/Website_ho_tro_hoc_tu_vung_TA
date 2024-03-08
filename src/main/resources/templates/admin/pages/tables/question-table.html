@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Vocabulary</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/feather/feather.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/mdi/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/ti-icons/css/themify-icons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/typicons/typicons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/simple-line-icons/css/simple-line-icons.css}">
+  <link rel="stylesheet" th:href="@{/static-admin/vendors/css/vendor.bundle.base.css}">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" th:href="@{/static-admin/css/vertical-layout-light/style.css}">
+  <!-- endinject -->
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+  
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <header th:replace="/admin/partials/_navbar.html"></header>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      <header th:replace="/admin/partials/_settings-panel.html"></header>
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      <header th:replace="/admin/partials/_sidebar.html"></header>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title" style="margin-bottom: 30px">[[${pageTitle}]]</h4>
+                  
+				  <div class="my-3">
+			      <form th:action="@{'/manage/courses/'+${courseId}+'/test/'+${testId}+'/list-question'}" id="searchForm">
+			        <div class="row d-flex">
+			          <div class="col-md-5">
+			            <div class="search" >
+			              <i class="fa fa-search"></i>
+			              <input id="keyword" type="search" name="keyword" th:value="${keyword}" class="form-control" style="height: 40px"
+			                placeholder="Nhập vào tên câu hỏi">
+			              <button type="submit" class="btn btn-success" style="height: 40px">Search</button>
+			            </div>
+			          </div>
+			          <div class="col-md-5" style="padding-left: 5%">
+			              <label for="pageSize">Số bản ghi trên mỗi trang </label>
+			            <select form="searchForm" name="size" th:value="${pageSize}" onchange="changePageSize()" class="size-select" style="height: 40px"
+			              id="pageSize">
+			              <option th:each="s : ${ {5, 10, 15} }" th:value="${s}" th:text="${s}" th:selected="${s == pageSize}"></option>
+			            </select>
+			          </div>
+			          <div class="col-md-1" style="height: 40px">
+			            <button id="btnClear" class="btn btn-secondary">Clear</button>
+			          </div>
+			        </div>
+			      </form>
+			    </div>
+			    <button type="button" class="btn btn-outline-success btn-fw" id="createButton" style="margin-bottom: 15px;margin-top: 15px">Thêm câu hỏi mới</button>
+			    <br>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Câu hỏi số</th>
+                          <th>Nội dung</th>
+                          <th>Lựa chọn 1</th>
+                          <th>Lựa chọn 2</th>
+                          <th>Lựa chọn 3</th>
+                          <th>Lựa chọn 4</th>
+                          <th>Đáp án đúng</th>
+                          <th>Hành động</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:each="question: ${questionPage}">  
+                          <td th:text="${question.questionNumber}" />
+                          <td th:text="${question.content}" />
+             			  <td th:text="${question.option_1}" />
+             			  <td th:text="${question.option_2}" />
+             			  <td th:text="${question.option_3}" />
+             			  <td th:text="${question.option_4}" />
+             			  <td th:text="${question.correctAnswer}" />
+                          
+                          <td>
+					          <a th:href="@{'/manage/courses/'+${courseId}+'/test/'+${testId}+'/edit'(questionId=${question.questionId})}" title="Edit this question"
+					            class="fa-regular fa-pen-to-square icon-dark"></a>
+					           &nbsp;
+					          <a th:href="@{'/manage/courses/'+${courseId}+'/test/'+${testId}+'/delete'(questionId=${question.questionId})}" id="btnDelete" data-toggle="modal" th:questionName="${question.questionNumber}"
+					            title="Delete this question" class="fa-regular fa-trash-can icon-dark btn-delete"></a>
+					      </td>
+                        </tr>
+                      </tbody>
+                    </table>
+					<br>
+					<div th:unless=${totalPages==0}> 
+					<div class="col-sm-10" th:if="${currentPage < totalPages}" >
+			        	Hiển thị [[(${currentPage}-1)*${questionPage.size()}+1]] đến [[${currentPage}*${questionPage.size()}]] trong [[${totalItems}]] bản ghi  
+			        </div>
+			        <div class="col-sm-10" th:unless="${currentPage < totalPages}" >
+			        	Hiển thị [[(${currentPage}-1)*${questionPage.size()}+1]] đến [[${totalItems}]] trong [[${totalItems}]] bản ghi 
+			        </div>
+			        </div>
+			        <div class="col-sm-10" th:if="${totalPages==0}" >
+			        	Không tìm thấy bản ghi!!
+			        </div>
+					<nav aria-label="Pagination" th:if="${totalPages > 0}">
+					  <ul class="pagination justify-content-center">
+					    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+					      <a th:replace="fragments/paging :: paging('/manage/courses/'+${courseId}+'/test/'+${testId}+'/list-question',1, '<<', 'First Page')"></a>
+					    </li>
+					    <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+					      <a th:replace="fragments/paging :: paging('/manage/courses/'+${courseId}+'/test/'+${testId}+'/list-question',${currentPage - 1}, 'Prev', 'Previous Page')"></a>
+					    </li>
+					    <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+					      <a class="page-link" href="#">...</a>
+					    </li>
+					    <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+					      th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+					      <a th:replace="fragments/paging :: paging('/manage/courses/'+${courseId}+'/test/'+${testId}+'/list-question',${page}, ${page}, 'Page ' + ${page})"></a>
+					    </li>
+					    <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+					      <a class="page-link" href="#">...</a>
+					    </li>
+					    <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+					      <a th:replace="fragments/paging :: paging('/manage/courses/'+${courseId}+'/test/'+${testId}+'/list-question',${currentPage + 1},'Next', 'Next Page')"></a>
+					    </li>
+					    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+					      <a th:replace="fragments/paging :: paging('/manage/courses/'+${courseId}+'/test/'+${testId}+'/list-question',${totalPages}, '>>', 'Last Page')"></a>
+					    </li>
+					  </ul>
+					</nav>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <div class="modal fade text-center" id="confirmModal">
+		    <div class="modal-dialog">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h5 class="modal-title">Xác nhận xóa</h5>
+		          <button type="button" class="close" data-bs-dismiss="modal">
+		            <span aria-hidden="true">&times;</span>
+		          </button>
+		        </div>
+		
+		        <div class="modal-body">
+		          <span id="confirmText"></span>
+		        </div>
+		
+		        <div class="modal-footer">
+		          <a type="button" id="yesBtn" class="btn btn-danger">Yes</a>
+		          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+        
+        <!-- partial -->      </div>
+
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="/static-admin/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="/static-admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="/static-admin/js/off-canvas.js"></script>
+  <script src="/static-admin/js/hoverable-collapse.js"></script>
+  <script src="/static-admin/js/template.js"></script>
+  <script src="/static-admin/js/settings.js"></script>
+  <script src="/static-admin/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <!-- End custom js for this page-->
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $(".btn-delete").on("click", function (e) {
+        e.preventDefault();
+        link = $(this);
+        questionName = link.attr("questionName");
+        $("#yesBtn").attr("href", link.attr("href"));
+        $("#confirmText").html("Bạn có thực sự muốn xóa câu hỏi \<strong\>" + questionName + "\<\/strong\> không?");
+        $("#confirmModal").modal('show');
+      });
+      
+
+      $("#btnClear").on("click", function (e) {
+        e.preventDefault();
+        $("#keyword").text("");
+        window.location = "[[@{'/manage/courses'+${courseId}+'/test/'+${testId}+'/list-question'}]]";
+      });
+    });
+    document.getElementById("createButton").onclick = function () {
+    	window.location = "[[@{'/manage/courses/'+${courseId}+'/test/'+${testId}+'/new-question'}]]";
+    };
+    function changePageSize() {
+      $("#searchForm").submit();
+    }
+  </script>
+</body>
+
+</html>

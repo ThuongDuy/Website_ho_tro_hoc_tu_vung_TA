@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Vocabulary</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+        
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap}" rel="stylesheet">
+                        
+        <link th:href="@{/static-user/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/bootstrap-icons.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/templatemo-topic-listing.css}" rel="stylesheet">
+<!--
+
+TemplateMo 590 topic listing
+
+https://templatemo.com/tm-590-topic-listing
+
+-->
+    </head>
+    
+    <body class="topics-listing-page" id="top">
+		
+        <main>
+            <header th:replace="/user/partials/nav.html"></header>
+            <header class="site-header d-flex flex-column justify-content-center align-items-center" style="height: 30px">
+                <div class="container" >
+                    <div class="row align-items-center">
+
+
+                    </div>
+                </div>
+            </header>
+            <section class="topics-detail-section" id="section">
+                <div class="container">
+                    <div class="row">
+						
+                        <div class="col-lg-8 col-12 mt-3 mx-auto">
+                        	<div style=" padding-bottom: 10px">
+                        		<h3>[[${story.name}]] - [[${story.englishName}]]</h3>
+                        		<p>[[${story.category}]]</p>
+                        	</div>
+                        	<img alt="" th:src = "@{'/images/'+${story.name}+'/'+${story.illustration}}" style="width: auto; height: 400px; margin-bottom: 30px">
+                        	<div th:each="paragraph: ${content}">
+                        	<p>[[${paragraph}]]</p><br>
+                        	</div>
+							
+                        </div>
+                        <div class="col-lg-3 col-12 mt-3 mx-auto">
+                        <p>Thể loại</p>
+                        <div style="background-color: var(--section-bg-color);border-radius: var(--border-radius-small);
+                          margin-top: 25px;margin-bottom: 35px">
+						      <div class="table-responsive">
+				                    <table class="table">
+				                      <thead>
+				                      <tr>
+				                        </tr>
+				                      </thead>
+				                      <tbody>
+				                        <tr >
+				                        	<td><a th:href="@{/app/bilingual-story(keyword='Truyện ngụ ngôn')}">Truyện ngụ ngôn</a></td>
+				                        </tr>
+				                        <tr >
+				                          	<td><a th:href="@{/app/bilingual-story(keyword='Cuộc sống')}">Cuộc sống</a></td>
+				                        </tr>
+				                        <tr >
+				                          	<td><a th:href="@{/app/bilingual-story(keyword='Đạo đức')}">Đạo đức</a></td>
+				                        </tr>
+				                      </tbody>
+				                    </table>
+				                  </div>
+			                 </div>
+                        </div>
+                       	
+                    </div>
+                </div>
+            </section>
+            <div th:replace="/user/partials/footer.html"></div>
+        </main>
+		
+
+        <!-- JAVASCRIPT FILES -->
+        <script th:src="@{/static-user/js/jquery.min.js}"></script>
+        <script th:src="@{/static-user/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/static-user/js/jquery.sticky.js}"></script>
+        <script th:src="@{/static-user/js/custom.js}"></script>
+        
+        <script type="text/javascript">
+	        
+  		</script>
+
+    </body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Vocabulary</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+        
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap}" rel="stylesheet">
+                        
+        <link th:href="@{/static-user/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/bootstrap-icons.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/templatemo-topic-listing.css}" rel="stylesheet">
+<!--
+
+TemplateMo 590 topic listing
+
+https://templatemo.com/tm-590-topic-listing
+
+-->
+    </head>
+    
+    <body class="topics-listing-page" id="top">
+		
+        <main>
+            <header th:replace="/user/partials/nav.html"></header>
+            <header class="site-header d-flex flex-column justify-content-center align-items-center" style="height: 30px">
+                <div class="container" >
+                    <div class="row align-items-center">
+
+
+                    </div>
+                </div>
+            </header>
+            <section class="topics-detail-section" id="section">
+                <div class="container">
+                    <div class="row">
+						
+                        <div class="col-lg-7 col-12 mt-3 mx-auto" style="padding-bottom: 30px">
+                        <div class="my-3" style=" padding-bottom: 30px; padding-top: 30px">
+					      <form th:action="@{'/app/course/'+${courseId}+'/allTest'}" id="searchForm">
+					        <div class="row d-flex">
+					          <div class="col-md-8">
+					            <h5>Bài thi - [[${course.courseName}]]</h5>
+					          </div>
+					          <div class="col-md-4" style="text-align: right;">
+					              
+						            <select form="searchForm" name="level" th:value="${level}" onchange="changeLevel()" class="level-select" 
+						            style="height: 40px; width:120px; border-radius: 5px;" id="level">
+						              <option th:each="s : ${ {'Tất cả', 'Dễ', 'Trung bình', 'Khó'} }" th:value="${s}" th:text="${s}" th:selected="${s == level}"></option>
+						            </select>
+					          </div>
+					          
+					        </div>
+					      </form>
+					    </div>
+                        	
+                        	
+							<div th:each="test, i: ${listTest}">
+								<div class="blog-card" th:if="${i.index%2==0}">
+								    <div class="meta">
+								      <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-1.jpg)"></div>
+								      
+								    </div>
+								    <div class="description">
+								      <h1>[[${test.testNumber}]]</h1>
+								      
+								      <p> Bài thi gồm [[${test.listQuestion.size()}]] câu hỏi - Thời gian làm bài [[${test.listQuestion.size()*45/60}]] phút 
+								      		<span> [[${test.listQuestion.size()*45%60}]] giây.</span> </p>
+								      <p class="read-more">
+								        <a th:href="@{'/app/course/'+${course.courseId}+'/doTest/'+${test.testId}}">Làm ngay</a>
+								      </p>
+								    </div>
+								  </div>
+								  <div class="blog-card alt" th:unless="${i.index%2==0}">
+								    <div class="meta">
+								      <div class="photo" style="background-image: url(https://storage.googleapis.com/chydlx/codepen/blog-cards/image-2.jpg)"></div>
+								      
+								    </div>
+								    <div class="description">
+								      <h1>[[${test.testNumber}]]</h1>
+								      <p> Bài thi gồm [[${test.listQuestion.size()}]] câu hỏi - Thời gian làm bài [[${test.listQuestion.size()*45/60}]] phút 
+								      		<span> [[${test.listQuestion.size()*45%60}]] giây.</span> </p>
+								      <p class="read-more">
+								        <a th:href="@{'/app/course/'+${course.courseId}+'/doTest/'+${test.testId}}">Làm ngay</a>
+								      </p>
+								    </div>
+								  </div>
+							</div>
+                        </div>
+                        <div class="col-lg-3 col-12 mt-3 mx-auto" style="padding-top: 30px">
+                        <p>Bảng xếp hạng</p>
+                        <div style="background-color: var(--section-bg-color);border-radius: var(--border-radius-small);
+                          margin-top: 30px;margin-bottom: 35px">
+						      <div class="table-responsive">
+				                    <table class="table">
+				                      <thead>
+				                      <tr>
+				                          <th></th>
+				                          <th>User</th>
+				                          <th>Điểm</th>
+				                        </tr>
+				                      </thead>
+				                      <tbody>
+				                        <tr th:each="user, i: ${list}">
+				                          <td th:text="${i.index+1}+'.'" />
+				                          <td th:text="${user.username}" />
+				                          <td th:text="${scores.get(i.index)}" />
+				                        </tr>
+				                      </tbody>
+				                    </table>
+				                  </div>
+			                 </div>
+                        </div>
+                       	<!-- <button type="button" class="btn btn-outline-success btn-fw prev" style="width: 150">Nộp bài</button> -->
+                    </div>
+                </div>
+            </section>
+            <div th:replace="/user/partials/footer.html"></div>
+        </main>
+		
+
+        <!-- JAVASCRIPT FILES -->
+        <script th:src="@{/static-user/js/jquery.min.js}"></script>
+        <script th:src="@{/static-user/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/static-user/js/jquery.sticky.js}"></script>
+        <script th:src="@{/static-user/js/custom.js}"></script>
+        
+        <script type="text/javascript">
+        function changeLevel() {
+            $("#searchForm").submit();
+          }
+  		</script>
+
+    </body>
+</html>

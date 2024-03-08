@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Vocabulary</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" th:href="@{https://fonts.googleapis.com}">
+        
+        <link rel="preconnect" th:href="@{https://fonts.gstatic.com}" crossorigin>
+
+        <link th:href="@{https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap}" rel="stylesheet">
+                        
+        <link th:href="@{/static-user/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link th:href="@{/static-user/css/bootstrap-icons.css}" rel="stylesheet">
+
+       <link th:href="@{/static-user/css/templatemo-topic-listing.css}" rel="stylesheet">
+        
+       <link th:href="@{/static-user/css/story.css}" rel="stylesheet">
+        
+         
+    </head>
+    
+    <body class="topics-listing-page" id="top">
+
+        <main>
+
+            <header th:replace="/user/partials/nav.html"></header>
+
+
+            <header class="site-header d-flex flex-column justify-content-center align-items-center">
+                <div class="container">
+                    <div class="row align-items-center">
+
+                        <div class="col-lg-5 col-12">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/app/">Trang chủ</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">Truyện song ngữ</li>
+                                </ol>
+                            </nav>
+
+                            <h2 class="text-white">Truyện song ngữ</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+
+            
+				<section class="section-padding">
+                <div class="container">
+                    <div class="row">
+						<div class="col-lg-8 col-12 mx-auto">
+                            <h1 class="text-center">Tất cả</h1>
+
+                            <h6 class="text-center">Tìm kiếm truyện theo tên hoặc thể loại</h6>
+
+                            <form class="custom-form mt-4 pt-2 mb-lg-0 mb-5" 
+                            th:action="@{/app/bilingual-story}" enctype="multipart/form-data" id="form" >
+                                    <input name="keyword" type="search" class="search_input" id="keyword" onkeydown="handleKeyDown(event)" th:value="${keyword}"
+                                     placeholder="Tên truyện/Thể loại ..." aria-label="Search">
+                            </form>
+                        </div>
+                        
+                            <section class="articles" style="margin-top: 50px">
+                      			<article >
+						        <div class="blog-wrapperr">
+									<div class="blog-cardd" th:each="story: ${storyPage}">
+										<div class="card-img"><img th:src = "@{'/images/'+${story.name}+'/'+${story.illustration}}">
+											<h1>[[${story.name}]]</h1>
+										</div>
+										<div class="card-details"><span>[[${story.category}]]</span><span sec:authorize="isAuthenticated()"><i class="bi bi-bookmark-heart"></i></span></div>
+										
+										<div class="card-text"><p>[[${story.description}]]</p></div>
+										<a th:href="@{'/app/bilingual-story/'+${story.storyId}}">
+											<div class="read-more">Đọc ngay</div>
+										</a>
+									</div>
+									
+								</div>
+								</article>
+			           		
+					      </section>
+                        
+                        
+
+                        <div class="col-lg-12 col-12" style="padding-top: 20px">
+                            <nav aria-label="Page navigation example" th:if="${totalPages > 0}">
+                                <ul class="pagination justify-content-center mb-0">
+                                    <li class="page-item" aria-label="Previous" th:classappend="${currentPage == 1} ? 'disabled'">
+                                        <a th:replace="fragments/paging-user :: paging('/app/bilingual-story',${currentPage - 1}, 'Prev', 'Previous Page')"></a>
+                                    </li>
+
+                                    <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                                        <a class="page-link" href="#">...</a>
+                                    </li>
+                                    
+                                    <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                                    	th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                                        <a th:replace="fragments/paging-user :: paging('/app/bilingual-story',${page}, ${page}, 'Page ' + ${page})"></a>
+                                    </li>
+                                    
+                                    <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                                        <a class="page-link" href="#">...</a>
+                                    </li>
+
+                                    <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                         <a th:replace="fragments/paging-user :: paging('/app/bilingual-story',${currentPage + 1},'Next', 'Next Page')"></a>
+                                    </li>
+                                  	
+                                </ul>
+                            </nav>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+
+		<div th:replace="/user/partials/footer.html"></div>
+
+        <!-- JAVASCRIPT FILES -->
+        <script th:src="@{/static-user/js/jquery.min.js}"></script>
+        <script th:src="@{/static-user/js/bootstrap.bundle.min.js}"></script>
+        <script th:src="@{/static-user/js/jquery.sticky.js}"></script>
+        <script th:src="@{/static-user/js/custom.js}"></script>
+		<script type="text/javascript">
+			function handleKeyDown(event) {
+	            if (event.key === "Enter") {
+	            	$("#form").submit();
+	            }
+	        }
+		</script>
+    </body>
+    
+</html>

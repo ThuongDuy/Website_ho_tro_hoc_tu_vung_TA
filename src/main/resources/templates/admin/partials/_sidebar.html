@@ -1,0 +1,68 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/manage/">
+              <i class="mdi mdi-grid-large menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item nav-category">Khóa học</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+              <i class="menu-icon mdi mdi-card-text-outline"></i>
+              <span class="menu-title">Quản lý khóa học</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manage/courses}">Danh sách khóa học</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manage/courses/new}">Thêm khóa học mới</a></li>
+              </ul>
+            </div>
+          </li>
+          
+          
+         
+          <li class="nav-item nav-category">Người dùng</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="menu-icon mdi mdi-account-circle-outline"></i>
+              <span class="menu-title">Quản lý người dùng</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/manage/users"> Danh sách người dùng </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/manage/users/new"> Thêm người dùng mới </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item nav-category">Truyện song ngữ</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#post" aria-expanded="false" aria-controls="form-elements">
+              <i class="menu-icon mdi mdi-card-text-outline"></i>
+              <span class="menu-title">Quản lý truyện song ngữ</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="post">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="/manage/bilingual-story">Danh sách truyện song ngữ</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item nav-category">Phản hồi</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="menu-icon mdi mdi-file-document"></i>
+              <span class="menu-title">Quản lý phản hồi</span>
+              <i class="menu-arrow"></i> 
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/manage/feedback">Danh sách phản hồi</a></li>
+              </ul>
+            </div>
+          </li>
+          
+        </ul>
+      </nav>
